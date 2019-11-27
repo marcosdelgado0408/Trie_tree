@@ -14,6 +14,7 @@ public class TrieNode {
 
     public HashMap<Character, TrieNode> getChildren() { return children; }
     public String getText() { return text; }
+    public boolean isWord() { return isWord; }
 
     public void setIsWord(boolean word) { isWord = word; }
     public void setText(String text) { this.text = text; }

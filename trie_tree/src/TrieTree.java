@@ -15,12 +15,15 @@ public class TrieTree {
     // quando adicionarmos a primeira letra no root, precisamos as outras letras como cada novo filho dessa primeira letta adicionada
     public void insertWord(String word){
         TrieNode root = this.root;
+
         for(int i=0;i<word.length();i++){
             TrieNode temp = root.getChildren().get(word.charAt(i));
+
             if(temp == null){
                 temp = new TrieNode();
                 root.getChildren().put(word.charAt(i), temp);
             }
+
             root = temp; // na proxima iteração do for ele adicionará o caractere nos filhos de temp
         }
         // leaf node será o fim da palavra
@@ -28,27 +31,21 @@ public class TrieTree {
         root.setText(word);
     }
 
-    public boolean search(String key){
-        return recursiveSearch(key, this.root);
-    }
 
+    public boolean search(String key){ // key será a palavra
+        TrieNode root = this.root;
 
-    private boolean recursiveSearch(String key, TrieNode root){ // key será a palavra
+        for(int i=0;i<key.length();i++){
+            TrieNode temp = root.getChildren().get(key.charAt(i));
 
-        if(root.getChildren().isEmpty()){ // caso chegar no nó folha eu vou pegar a palavra
-            System.out.println("txt: " + root.getText());
-            System.out.println("key: " +  key);
-            if(root.getText().equals(key)){
-                System.out.println("idjasdjopasdjasopjdpsoao");
-                return true;
+            if(temp == null){
+                return false;
             }
+
+            root = temp; // proxima iterção será checado os filhos de temp -> e assim por diante
         }
-        else {
-            for (Map.Entry<Character, TrieNode> pair : root.getChildren().entrySet()) {
-                recursiveSearch(key, pair.getValue());
-            }
-        }
-        return false;
+
+        return root.isWord();
     }
 
 

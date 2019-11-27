@@ -5,10 +5,8 @@ public class Main {
         trieTree.insertWord("ola");
         trieTree.insertWord("pessoal");
         trieTree.insertWord("Amar");
-        trieTree.printTrieTree(trieTree.getRoot());
+//        trieTree.printTrieTree(trieTree.getRoot());
 
-
-        System.out.println(trieTree.search("Amar"));
-
+        System.out.println(trieTree.search("ola"));
     }
 }
