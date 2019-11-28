@@ -1,26 +1,46 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         TrieTree trieTree = new TrieTree();
 
-        //a, ama, amar, ame, amei,
-        //ameixa, oi, oito, eu, ele, ela, eles, elas
 
-        trieTree.insertWord("a");
-        trieTree.insertWord("ama");
-        trieTree.insertWord("amar");
-        trieTree.insertWord("ame");
-        trieTree.insertWord("amei");
-        trieTree.insertWord("ameixa");
-        trieTree.insertWord("oi");
-        trieTree.insertWord("oito");
-        trieTree.insertWord("eu");
-        trieTree.insertWord("ele");
-        trieTree.insertWord("ela");
-        trieTree.insertWord("eles");
-        trieTree.insertWord("elas");
+        // Insertion
+        try {
+            File file = new File(args[0]);
+            Scanner scanner = new Scanner(file);
 
-        System.out.println(trieTree.autoComplete("am"));
-        System.out.println(trieTree.autoComplete("am", 10));
+            while (scanner.hasNext()){
+                String word = scanner.next();
+                trieTree.insertWord(word);
+            }
+
+            scanner.close();
+
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Erro\nEste arquivo não existe");
+            return;
+        }
+
+
+
+        // AutoComplete
+        if(args.length == 3){
+            System.out.println(trieTree.autoComplete(args[1], Integer.parseInt(args[2])));
+        }
+        else if(args.length == 2){
+            System.out.println(trieTree.autoComplete(args[1]));
+        }
+        else {
+            System.out.println("Quantidade de argumentos inválida");
+        }
+
+
 
     }
+
+
 }

@@ -4,7 +4,6 @@ public class TrieTree {
     private TrieNode root;
     private List<String> startsWithStrings;
 
-
     public TrieTree() {
         root = new TrieNode();
         startsWithStrings = new ArrayList<>();
@@ -40,7 +39,7 @@ public class TrieTree {
         for(int i=0;i<key.length();i++){
             TrieNode temp = root.getChildren().get(key.charAt(i)); // pegando o caractere filho que a key possui
 
-            System.out.println(root.getChildren());
+//            System.out.println(root.getChildren());
 
 
             if(temp == null){
@@ -107,8 +106,39 @@ public class TrieTree {
             }
             startsWith(key, pair.getValue());
         }
+    }
+
+
+    public void remove(String key){
+        TrieNode root = this.root;
+
+        boolean canRemove = search(key);
+
+        if(canRemove){
+            changeBoolean(key, this.root);
+        }
 
     }
+
+
+    private void changeBoolean(String key, TrieNode root) {
+        for (Map.Entry<Character, TrieNode> pair : root.getChildren().entrySet()) {
+
+            if(pair.getValue().isWord()){
+                if(pair.getValue().getText().equals(key)){
+                    pair.getValue().setIsWord(false);
+                    pair.getValue().setText(null);
+                }
+            }
+
+
+            changeBoolean(key, pair.getValue());
+        }
+    }
+
+
+
+
 
 
     public void printTrieTree(TrieNode root){
