@@ -2,12 +2,12 @@ import java.util.*;
 
 public class TrieTree {
     private TrieNode root;
-    private StringBuilder startsWithStrings;
+    private List<String> startsWithStrings;
 
 
     public TrieTree() {
         root = new TrieNode();
-        startsWithStrings = new StringBuilder();
+        startsWithStrings = new ArrayList<>();
     }
 
     public TrieNode getRoot() { return root; }
@@ -55,9 +55,28 @@ public class TrieTree {
 
     public String autoComplete(String key){
         startsWith(key, this.root);
-        String words = this.startsWithStrings.toString();
-        this.startsWithStrings.setLength(0); //limpando o startsWithStrings para não ficar lixo na nova chamada de método
-        return words;
+        StringBuilder message = new StringBuilder();
+
+        for(String it: this.startsWithStrings){
+            message.append(it).append("\n");
+        }
+
+        this.startsWithStrings.clear(); //limpando o startsWithStrings para não ficar lixo na nova chamada de método
+        return String.valueOf(message);
+    }
+
+
+    public String autoComplete(String key, int maxShow){
+        startsWith(key, this.root);
+        StringBuilder message = new StringBuilder();
+        String[] startsWithStringsArray = startsWithStrings.toArray(new String[0]);
+
+        for(int i=0;i<maxShow;i++){
+            message.append(startsWithStringsArray[i]).append("\n");
+        }
+
+        this.startsWithStrings.clear(); //limpando o startsWithStrings para não ficar lixo na nova chamada de método
+        return String.valueOf(message);
     }
 
 
@@ -79,7 +98,7 @@ public class TrieTree {
             if(pair.getValue().isWord()){ // se for palavra ela vai possuir o string text
                if(pair.getValue().getText().startsWith(key)){
                    // jogando em uma variavel global, pois somente com o return não funcionaria por causa das chamadas recursivas
-                   startsWithStrings.append(pair.getValue().getText()).append("\n");
+                   startsWithStrings.add(pair.getValue().getText());
                }
             }
             startsWith(key, pair.getValue());

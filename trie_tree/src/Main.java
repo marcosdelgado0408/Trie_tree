@@ -14,6 +14,7 @@ public class Main {
         trieTree.insertWord("ameixa");
 
         System.out.println(trieTree.autoComplete("am"));
+        System.out.println(trieTree.autoComplete("am", 2));
 
     }
 }
