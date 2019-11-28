@@ -1,15 +1,17 @@
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class TrieTree {
     private TrieNode root;
+    private StringBuilder startsWithStrings;
 
 
     public TrieTree() {
         root = new TrieNode();
+        startsWithStrings = new StringBuilder();
     }
 
     public TrieNode getRoot() { return root; }
+
 
     // primeiro temos que checar se a primeira letra da palavra pertence a algum dos filhos do root.
     // quando adicionarmos a primeira letra no root, precisamos as outras letras como cada novo filho dessa primeira letta adicionada
@@ -36,7 +38,10 @@ public class TrieTree {
         TrieNode root = this.root;
 
         for(int i=0;i<key.length();i++){
-            TrieNode temp = root.getChildren().get(key.charAt(i));
+            TrieNode temp = root.getChildren().get(key.charAt(i)); // pegando o caractere filho que a key possui
+
+            System.out.println(root.getChildren());
+
 
             if(temp == null){
                 return false;
@@ -48,7 +53,39 @@ public class TrieTree {
         return root.isWord();
     }
 
+    public String autoComplete(String key){
+        startsWith(key, this.root);
+        String words = this.startsWithStrings.toString();
+        this.startsWithStrings.setLength(0); //limpando o startsWithStrings para não ficar lixo na nova chamada de método
+        return words;
+    }
 
+
+
+    /**
+     * Nessa função eu tive que passar em todos os nós, verificar se ele é um nó de fim de palavra,
+     * e assim eu poderei comparar se essa palavra começa com o valor da chave.
+     *
+     * @param key chave para pesquisa
+     * @param root root node
+     */
+    private void startsWith(String key, TrieNode root){
+
+        if(root == null){
+            return;
+        }
+
+        for (Map.Entry<Character, TrieNode> pair : root.getChildren().entrySet()) {
+            if(pair.getValue().isWord()){ // se for palavra ela vai possuir o string text
+               if(pair.getValue().getText().startsWith(key)){
+                   // jogando em uma variavel global, pois somente com o return não funcionaria por causa das chamadas recursivas
+                   startsWithStrings.append(pair.getValue().getText()).append("\n");
+               }
+            }
+            startsWith(key, pair.getValue());
+        }
+
+    }
 
 
     public void printTrieTree(TrieNode root){
