@@ -71,6 +71,10 @@ public class TrieTree {
         StringBuilder message = new StringBuilder();
         String[] startsWithStringsArray = startsWithStrings.toArray(new String[0]);
 
+        if(maxShow > startsWithStringsArray.length){ // caso a pessoa indique um tamanho maior que o tamanho existesnte da lista de strings
+            maxShow = startsWithStringsArray.length;
+        }
+
         for(int i=0;i<maxShow;i++){
             message.append(startsWithStringsArray[i]).append("\n");
         }
