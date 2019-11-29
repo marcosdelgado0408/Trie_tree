@@ -56,6 +56,10 @@ public class TrieTree {
         startsWith(key, this.root);
         StringBuilder message = new StringBuilder();
 
+        if(key.isBlank()){
+            return "";
+        }
+
         for(String it: this.startsWithStrings){
             message.append(it).append("\n");
         }
@@ -69,6 +73,11 @@ public class TrieTree {
         startsWith(key, this.root);
         StringBuilder message = new StringBuilder();
         String[] startsWithStringsArray = startsWithStrings.toArray(new String[0]);
+
+
+        if(key.isBlank()){
+            return "";
+        }
 
         if(maxShow > startsWithStringsArray.length){ // caso a pessoa indique um tamanho maior que o tamanho existesnte da lista de strings
             maxShow = startsWithStringsArray.length;
