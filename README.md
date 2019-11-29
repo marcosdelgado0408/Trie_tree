@@ -1,2 +1,4 @@
 # Trie_tree
-trie tree implementation
+Para utilizar a interface gráfica, basta digitar: 
+
+    java -jar trie_tree.jar "arquivo .txt" -ui
